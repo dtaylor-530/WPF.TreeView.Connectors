@@ -1,0 +1,152 @@
+﻿<Window x:Class="WpfApp2.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+        xmlns:WPF.Connectors="clr-namespace:WPF.Connectors;assembly=WPF.Connectors"
+        WindowStartupLocation="CenterScreen"
+        Title="Designer"
+        Height="850" Width="1200">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <!--<Style TargetType="TreeViewItem">
+                <Style.Triggers>
+                    <Trigger Property="ut:TreeViewDropHighlighter.IsPossibleDropTarget" Value="True">
+                        <Setter Property="Background" Value="Green" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>-->
+
+
+            <ControlTemplate x:Key="One" TargetType="{x:Type TreeViewItem}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition MinWidth="19"
+                              Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="SelectionStates">
+                            <VisualState x:Name="Selected">
+                                <Storyboard>
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Bd"
+                                                Storyboard.TargetProperty="(Panel.Background).
+                    (SolidColorBrush.Color)"
+                                                >
+                                        <EasingColorKeyFrame KeyTime="0"
+                                         Value="{DynamicResource SelectedBackgroundColor}" />
+                                    </ColorAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Unselected" />
+                            <VisualState x:Name="SelectedInactive">
+                                <Storyboard>
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Bd"
+                                                Storyboard.TargetProperty="(Panel.Background).
+                    (SolidColorBrush.Color)">
+                                        <EasingColorKeyFrame KeyTime="0"
+                                         Value="{DynamicResource SelectedUnfocusedColor}" />
+                                    </ColorAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                        </VisualStateGroup>
+                        <VisualStateGroup x:Name="ExpansionStates">
+                            <VisualState x:Name="Expanded">
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                 Storyboard.TargetName="ItemsHost">
+                                        <DiscreteObjectKeyFrame KeyTime="0"
+                                            Value="{x:Static Visibility.Visible}" />
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Collapsed" />
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <ToggleButton x:Name="Expander"
+                
+                        ClickMode="Press"
+                        IsChecked="{Binding IsExpanded, 
+            RelativeSource={RelativeSource TemplatedParent}}"/>
+                    <Border x:Name="Bd"
+                  Grid.Column="1"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  Padding="{TemplateBinding Padding}">
+                        <WrapPanel>
+                            <ContentPresenter x:Name="PART_Header"
+                                           WPF.Connectors:Ex.Position="Right" 
+                              ContentSource="Header"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            <!--<CheckBox IsChecked="{TemplateBinding IsMouseOver}">Is mouse over</CheckBox>-->
+             
+                        </WrapPanel>
+               
+                    </Border>
+                    <ItemsPresenter x:Name="ItemsHost"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Visibility="Collapsed" />
+                </Grid>
+            </ControlTemplate>
+
+            <Style TargetType="{x:Type TreeViewItem}">
+                <Setter Property="Template" Value="{StaticResource One}"></Setter>
+            </Style>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+
+
+            <!-- Designer -->
+            <ScrollViewer Name="DesignerScrollViewer"
+                                  Background="Transparent"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
+                <Canvas Focusable="true" x:Name="MyDesigner"
+                 
+                            Margin="10" FocusVisualStyle="{x:Null}"
+                       >
+                    <TreeView x:Name="MyTreeView"    
+       
+            AlternationCount="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}" >
+                        <TreeViewItem Header="Item2" >
+                            <TreeViewItem Header="SubItem1"/>
+                            <TreeViewItem Header="SubItem2" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item3" >
+                            <TreeViewItem Header="SubItem3" />
+                            <TreeViewItem Header="SubItem4" />
+                            <TreeViewItem Header="SubItem5" />
+                            <TreeViewItem Header="SubItem6" />
+                            <TreeViewItem Header="SubItem7" />
+                            <TreeViewItem Header="SubItem8" >
+                                <TreeViewItem Header="SubSubItem1" />
+                                <TreeViewItem Header="SubSubItem2" />
+                                <TreeViewItem Header="SubSubItem3" />
+                                <TreeViewItem Header="SubSubItem4" />
+                            </TreeViewItem>
+                        </TreeViewItem>
+
+                    </TreeView>
+                </Canvas>
+            </ScrollViewer>
+
+        </Grid>
+    </Grid>
+</Window>
+
